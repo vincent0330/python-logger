@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #   logger
-#   使用说明：此日志是对 的封装，目前支持：
+#   使用说明：此日志是对logging的封装，目前支持：
 #   1、写日志到Console和File:
 #       logger = make_8lab_console_file_logger()
 #   2、写日志到Console和带时间切割策略的File:
