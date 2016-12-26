@@ -15,16 +15,16 @@ from logging.handlers import WatchedFileHandler
 
 SERVER_ERROR_MSG = '500 Internal Server Error'
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-LOG_FORMAT = '%(asctime)s.%(msecs)03d %(levelname)s ' + \
-            '[%(thread)x] (%(module)s) %(message)s'
-LOG_FILENAME = "/var/log/8lab/app.log"
+LOG_FORMAT = '%(asctime)s [%(levelname)s] [%(module)s:%(funcName)s] [%(lineno)d] - %(message)s'
+LOG_FILENAME = "/var/log/app.log"
+LOG_LEVEL = logging.DEBUG
 formatter = logging.Formatter(LOG_FORMAT, DATE_FORMAT)
 
 
 #  定义日志对象,实现同时写入Console和文件"/var/log/8lab/app.log"
 def make_8lab_console_file_logger():
     common_logger = logging.getLogger("8lab")
-    common_logger.setLevel(logging.DEBUG)
+    common_logger.setLevel(LOG_LEVEL)
     common_logger.addHandler(__console_handler())
     common_logger.addHandler(__file_handler())
     return common_logger
@@ -33,7 +33,7 @@ def make_8lab_console_file_logger():
 #  定义日志对象,实现同时写入Console和文件"/var/log/8lab/app.log",并且可以切割
 def make_8lab_console_time_logger():
     common_logger = logging.getLogger("8lab")
-    common_logger.setLevel(logging.DEBUG)
+    common_logger.setLevel(LOG_LEVEL)
     common_logger.addHandler(__console_handler())
     common_logger.addHandler(__time_handler())
     return common_logger
@@ -66,6 +66,4 @@ def __time_handler():
     time_handler.suffix = '%Y%m%d'
     return time_handler
 
-logger = make_8lab_django_logger()
-# logger = make_8lab_console_file_logger()
-# logger.info("aa")
+logger = make_8lab_console_time_logger()
